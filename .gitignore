@@ -1,0 +1,75 @@
+# ==============================================================================
+# VYRA — WordPress Theme & Music Platform Git Ignore
+# ==============================================================================
+
+# WordPress Core Folders & Files
+/wp-admin/
+/wp-includes/
+/index.php
+/license.txt
+/readme.html
+/wp-activate.php
+/wp-blog-header.php
+/wp-comments-post.php
+/wp-config-sample.php
+/wp-config.php
+/wp-cron.php
+/wp-links-opml.php
+/wp-load.php
+/wp-login.php
+/wp-mail.php
+/wp-settings.php
+/wp-signup.php
+/wp-trackback.php
+/xmlrpc.php
+/.htaccess
+
+# Local WP Debug & Utility Files
+local-xdebuginfo.php
+fix-audio.php
+
+# WordPress Content Exclusions (Keep custom vyra-theme tracked)
+/wp-content/plugins/
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/backups/
+/wp-content/duplicator-backups/
+/wp-content/mu-plugins/
+/wp-content/index.php
+/wp-content/themes/twentytwenty*
+/wp-content/themes/index.php
+
+# Local Database & Backup Archives
+*.sql
+*.sqlite
+*.db
+*.daf
+*_installer.php
+duplicator_*.json
+
+# Environment & Credentials
+.env
+.env.*
+*.pem
+*.key
+*.pub
+credentials.json
+secrets.json
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs & Temporary Files
+*.log
+tmp/
+scratch/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

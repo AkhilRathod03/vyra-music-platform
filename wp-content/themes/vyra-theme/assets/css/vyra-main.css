@@ -1,0 +1,2861 @@
+/* ==========================================================================
+   VYRA MUSIC THEME - MAIN STYLESHEET
+   Aesthetic: Premium, Cinematic, Editorial Dark Mode (Inspired by Y.CO level visual quality)
+   Technology: Pure Vanilla CSS3 (Custom Properties, Flexbox, Grid, CSS Gradients)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN SYSTEM TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+	/* Color Palette */
+	--vyra-bg-dark: #050507;
+	--vyra-bg-surface: #0a0a0e;
+	--vyra-bg-card: #111116;
+	--vyra-bg-glass: rgba(10, 10, 14, 0.85);
+
+	--vyra-text-main: #ffffff;
+	--vyra-text-muted: #8e8e96;
+	--vyra-text-dim: #555560;
+
+	--vyra-accent: #ffffff;
+	--vyra-accent-hover: #e0e0e0;
+	--vyra-border: rgba(255, 255, 255, 0.08);
+	--vyra-border-hover: rgba(255, 255, 255, 0.2);
+
+	/* System Typography Stack */
+	--vyra-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--vyra-font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+
+	/* Timings */
+	--vyra-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	--vyra-transition-fast: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+	/* Layout */
+	--vyra-max-width: 1360px;
+	--vyra-header-height: 84px;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE STYLES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+	font-size: 16px;
+	background-color: var(--vyra-bg-dark);
+	color: var(--vyra-text-main);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body.vyra-body {
+	font-family: var(--vyra-font-sans);
+	background-color: var(--vyra-bg-dark);
+	color: var(--vyra-text-main);
+	line-height: 1.6;
+	overflow-x: hidden;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	transition: var(--vyra-transition-fast);
+}
+
+img, svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+button, input {
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	border: none;
+	background: none;
+	outline: none;
+}
+
+button {
+	cursor: pointer;
+}
+
+ul {
+	list-style: none;
+}
+
+.vyra-container {
+	width: 100%;
+	max-width: var(--vyra-max-width);
+	margin: 0 auto;
+	padding: 0 2.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   3. SECTION REVEAL ANIMATIONS
+   -------------------------------------------------------------------------- */
+.vyra-reveal {
+	opacity: 0;
+	transform: translateY(40px);
+	transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vyra-reveal.vyra-revealed,
+.vyra-reveal.vyra-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   4. HEADER & NAVIGATION
+   -------------------------------------------------------------------------- */
+.vyra-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: var(--vyra-header-height);
+	z-index: 1000;
+	transition: var(--vyra-transition);
+	background: linear-gradient(180deg, rgba(5, 5, 7, 0.9) 0%, rgba(5, 5, 7, 0) 100%);
+}
+
+.vyra-header.vyra-scrolled {
+	background: var(--vyra-bg-glass);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-header-container {
+	max-width: var(--vyra-max-width);
+	margin: 0 auto;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 2.5rem;
+}
+
+.vyra-logo {
+	font-size: 1.4rem;
+	font-weight: 900;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	display: flex;
+	align-items: center;
+}
+
+.vyra-logo-dot {
+	color: var(--vyra-text-dim);
+}
+
+.vyra-nav-list {
+	display: flex;
+	align-items: center;
+	gap: 3rem;
+}
+
+.vyra-nav-link {
+	font-size: 0.78rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-muted);
+	position: relative;
+	padding: 0.5rem 0;
+}
+
+.vyra-nav-link::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0%;
+	height: 1px;
+	background-color: var(--vyra-text-main);
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-nav-link:hover {
+	color: var(--vyra-text-main);
+}
+
+.vyra-nav-link:hover::after {
+	width: 100%;
+}
+
+/* Mobile Toggle */
+.vyra-mobile-toggle {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	gap: 6px;
+	width: 32px;
+	height: 32px;
+	z-index: 1002;
+}
+
+.vyra-toggle-bar {
+	display: block;
+	width: 100%;
+	height: 2px;
+	background-color: var(--vyra-text-main);
+	transition: var(--vyra-transition);
+}
+
+.vyra-mobile-toggle[aria-expanded="true"] .vyra-toggle-bar:nth-child(1) {
+	transform: translateY(4px) rotate(45deg);
+}
+
+.vyra-mobile-toggle[aria-expanded="true"] .vyra-toggle-bar:nth-child(2) {
+	transform: translateY(-4px) rotate(-45deg);
+}
+
+.vyra-mobile-menu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background: var(--vyra-bg-dark);
+	z-index: 1001;
+	opacity: 0;
+	visibility: hidden;
+	transition: var(--vyra-transition);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.vyra-mobile-menu.vyra-active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.vyra-mobile-nav-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2.25rem;
+}
+
+.vyra-mobile-nav-link {
+	font-size: 2rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-mobile-nav-link:hover {
+	color: var(--vyra-text-main);
+}
+
+/* --------------------------------------------------------------------------
+   5. BUTTONS & UI ELEMENTS
+   -------------------------------------------------------------------------- */
+.vyra-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	padding: 1.1rem 2.5rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	border-radius: 2px;
+	transition: var(--vyra-transition);
+}
+
+.vyra-btn-primary {
+	background-color: var(--vyra-text-main);
+	color: var(--vyra-bg-dark);
+}
+
+.vyra-btn-primary:hover {
+	background-color: var(--vyra-accent-hover);
+	transform: translateY(-2px);
+}
+
+.vyra-btn-secondary {
+	background-color: rgba(255, 255, 255, 0.05);
+	color: var(--vyra-text-main);
+	border: 1px solid var(--vyra-border);
+}
+
+.vyra-btn-secondary:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-color: var(--vyra-border-hover);
+}
+
+.vyra-btn-outline {
+	background-color: transparent;
+	color: var(--vyra-text-main);
+	border: 1px solid var(--vyra-border);
+}
+
+.vyra-btn-outline:hover {
+	border-color: var(--vyra-text-main);
+}
+
+.vyra-link-arrow {
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-link-arrow:hover {
+	color: var(--vyra-text-main);
+}
+
+/* Section Headings & Universal Section Spacing */
+.vyra-section {
+	padding: 5rem 0;
+}
+
+.vyra-section-header {
+	margin-bottom: 2.75rem;
+}
+
+.vyra-section-sub {
+	display: block;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.35em;
+	color: var(--vyra-text-dim);
+	margin-bottom: 0.75rem;
+}
+
+.vyra-section-title {
+	font-size: clamp(2rem, 3.5vw, 3rem);
+	font-weight: 900;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+}
+
+.vyra-flex-between {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   6. HERO SECTION (CINEMATIC & MONUMENTAL)
+   -------------------------------------------------------------------------- */
+.vyra-hero-section {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	min-height: 680px;
+	max-height: 960px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.vyra-hero-visual-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.vyra-hero-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	z-index: 1;
+	transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vyra-hero-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(180deg, rgba(5,5,7,0.4) 0%, rgba(5,5,7,0.85) 100%), radial-gradient(circle at center, rgba(5,5,7,0.15) 0%, rgba(5,5,7,0.75) 100%);
+	z-index: 2;
+}
+
+.vyra-hero-content {
+	position: relative;
+	z-index: 3;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: calc(var(--vyra-header-height) + 1rem);
+}
+
+.vyra-hero-brand-title {
+	font-size: clamp(4.5rem, 14vw, 12rem);
+	font-weight: 900;
+	line-height: 0.88;
+	letter-spacing: -0.04em;
+	text-transform: uppercase;
+	margin-bottom: 1.25rem;
+	color: #ffffff;
+	text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.vyra-hero-subtitle {
+	font-size: clamp(0.8rem, 1.8vw, 1.05rem);
+	font-weight: 600;
+	letter-spacing: 0.4em;
+	text-transform: uppercase;
+	color: var(--vyra-text-muted);
+	margin-bottom: 2.75rem;
+}
+
+.vyra-hero-ctas {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.vyra-scroll-indicator {
+	position: absolute;
+	bottom: 2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.4rem;
+	color: var(--vyra-text-dim);
+}
+
+.vyra-scroll-indicator:hover {
+	color: var(--vyra-text-main);
+}
+
+.vyra-scroll-text {
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.3em;
+}
+
+.vyra-scroll-line {
+	width: 1px;
+	height: 32px;
+	background: linear-gradient(180deg, var(--vyra-text-muted) 0%, rgba(255,255,255,0) 100%);
+	animation: vyraPulseLine 2.2s infinite ease-in-out;
+}
+
+@keyframes vyraPulseLine {
+	0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+	50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* --------------------------------------------------------------------------
+   7. FEATURED RELEASE SECTION
+   -------------------------------------------------------------------------- */
+.vyra-featured-section {
+	padding: 4.5rem 0 3rem 0;
+}
+
+.vyra-featured-section .vyra-section-header {
+	margin-bottom: 2rem;
+}
+
+.vyra-featured-layout {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3.5rem;
+	align-items: center;
+}
+
+.vyra-featured-artwork-wrapper {
+	width: 100%;
+	max-width: 460px;
+	margin: 0 auto;
+}
+
+.vyra-artwork-container {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	border-radius: 2px;
+	overflow: hidden;
+	box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+	border: 1px solid var(--vyra-border);
+}
+
+.vyra-artwork-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vyra-artwork-container:hover .vyra-artwork-img {
+	transform: scale(1.04);
+}
+
+.vyra-artwork-light-sheen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.3) 100%);
+	pointer-events: none;
+}
+
+.vyra-artwork-number {
+	position: absolute;
+	top: 1.25rem;
+	left: 1.25rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	color: rgba(255, 255, 255, 0.7);
+	text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+	z-index: 2;
+}
+
+.vyra-artwork-brand {
+	position: absolute;
+	bottom: 1.25rem;
+	right: 1.25rem;
+	font-size: 0.7rem;
+	font-weight: 800;
+	letter-spacing: 0.3em;
+	color: rgba(255, 255, 255, 0.6);
+	text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+	z-index: 2;
+}
+
+.vyra-play-overlay-btn {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.9);
+	width: 60px;
+	height: 60px;
+	background-color: var(--vyra-text-main);
+	color: var(--vyra-bg-dark);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	z-index: 3;
+	transition: var(--vyra-transition);
+}
+
+.vyra-artwork-container:hover .vyra-play-overlay-btn {
+	opacity: 1;
+	transform: translate(-50%, -50%) scale(1);
+}
+
+.vyra-featured-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+}
+
+.vyra-meta-badge {
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.25em;
+	color: var(--vyra-text-dim);
+	text-transform: uppercase;
+}
+
+.vyra-track-title {
+	font-size: clamp(2rem, 4vw, 3.25rem);
+	font-weight: 900;
+	letter-spacing: -0.03em;
+	line-height: 1;
+}
+
+.vyra-track-artist {
+	font-size: 1.05rem;
+	color: var(--vyra-text-muted);
+	font-weight: 500;
+}
+
+.vyra-track-description {
+	font-size: 0.9rem;
+	color: var(--vyra-text-muted);
+	line-height: 1.65;
+}
+
+/* ==========================================================================
+   7. FEATURED & COMPACT AUDIOIGNITER PLAYER (VYRA EDITORIAL STYLING)
+   ========================================================================== */
+
+/* Outer Player Wrapper / Container Card */
+.vyra-single-player-area,
+.vyra-player-box,
+.vyra-featured-player-box {
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 1.15rem 1.35rem;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0.75rem 0;
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-single-player-area:hover,
+.vyra-player-box:hover,
+.vyra-featured-player-box:hover {
+	border-color: var(--vyra-border-hover);
+}
+
+/* Header Label & Live Green Dot */
+.vyra-player-label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	color: var(--vyra-text-muted);
+	padding-bottom: 0.6rem;
+	margin-bottom: 0.85rem;
+	border-bottom: 1px solid var(--vyra-border);
+	text-transform: uppercase;
+}
+
+.vyra-live-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: #22c55e;
+	box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+	display: inline-block;
+	flex-shrink: 0;
+}
+
+.vyra-featured-player {
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+/* AudioIgniter Root Containers Reset */
+.vyra-featured-player .audioigniter-root,
+.vyra-featured-player .ai-wrap {
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	width: 100% !important;
+}
+
+.vyra-featured-player .ai-control-wrap {
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 0.75rem !important;
+	width: 100% !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+/* Meta Controls Row: Centered Play/Pause Button Area */
+.vyra-featured-player .ai-audio-controls-meta {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 100% !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.vyra-featured-player .ai-track-info {
+	display: none !important;
+}
+
+.vyra-featured-player .ai-audio-controls-meta-right {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	margin: 0 auto !important;
+	width: auto !important;
+}
+
+/* Centered Circular Play / Pause Button (44px) */
+.vyra-featured-player .ai-audio-control,
+.vyra-featured-player .ai-btn-play,
+.vyra-featured-player .ai-btn-pause {
+	width: 44px !important;
+	height: 44px !important;
+	min-width: 44px !important;
+	min-height: 44px !important;
+	border-radius: 50% !important;
+	background-color: #ffffff !important;
+	color: #050507 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: none !important;
+	cursor: pointer !important;
+	transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease !important;
+	margin: 0 auto !important;
+	padding: 0 !important;
+	outline: none !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+	position: relative !important;
+}
+
+.vyra-featured-player .ai-audio-control:hover,
+.vyra-featured-player .ai-audio-control:focus {
+	background-color: #e2e2e8 !important;
+	transform: scale(1.06) !important;
+	border: none !important;
+}
+
+.vyra-featured-player .ai-audio-control svg,
+.vyra-featured-player .ai-audio-control path {
+	fill: #050507 !important;
+	color: #050507 !important;
+}
+
+/* Override AudioIgniter default pink accent (#f70f5d) */
+.vyra-featured-player .ai-wrap .ai-audio-control,
+.vyra-featured-player .ai-wrap .ai-audio-control:hover,
+.vyra-featured-player .ai-wrap .ai-audio-control:focus,
+.vyra-featured-player .ai-wrap .ai-btn.ai-btn-active {
+	background-color: #ffffff !important;
+	color: #050507 !important;
+}
+
+.vyra-featured-player .ai-wrap .ai-track-progress {
+	background-color: #ffffff !important;
+}
+
+/* Progress Bar & Seek Controls */
+.vyra-featured-player .ai-audio-controls-progress {
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 0.4rem !important;
+	width: 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.vyra-featured-player .ai-track-progress-bar {
+	height: 3px !important;
+	background-color: rgba(255, 255, 255, 0.15) !important;
+	border-radius: 2px !important;
+	position: relative !important;
+	cursor: pointer !important;
+	overflow: visible !important;
+	width: 100% !important;
+}
+
+.vyra-featured-player .ai-track-progress {
+	background-color: #ffffff !important;
+	height: 100% !important;
+	border-radius: 2px !important;
+	position: relative !important;
+}
+
+.vyra-featured-player .ai-track-progress::after {
+	content: "" !important;
+	display: block !important;
+	width: 10px !important;
+	height: 10px !important;
+	background-color: #ffffff !important;
+	border-radius: 50% !important;
+	position: absolute !important;
+	right: -5px !important;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
+	box-shadow: 0 0 8px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Timers: Current Time (Left) <-----------------> Duration (Right) */
+.vyra-featured-player .ai-track-time {
+	display: flex !important;
+	justify-content: space-between !important;
+	align-items: center !important;
+	font-size: 0.75rem !important;
+	font-family: var(--vyra-font-mono) !important;
+	color: var(--vyra-text-muted) !important;
+	line-height: 1 !important;
+	width: 100% !important;
+	margin-top: 0.2rem !important;
+}
+
+.vyra-featured-player .ai-track-time-current,
+.vyra-featured-player .ai-track-time-duration {
+	display: inline-block !important;
+	color: var(--vyra-text-muted) !important;
+	font-family: var(--vyra-font-mono) !important;
+	font-size: 0.75rem !important;
+	letter-spacing: 0.05em !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+}
+
+/* Hide Unnecessary AudioIgniter UI Panels & Controls */
+.vyra-featured-player .ai-tracklist-wrap,
+.vyra-featured-player .ai-tracklist,
+.vyra-featured-player .ai-footer,
+.vyra-featured-player .ai-tracklist-toggle,
+.vyra-featured-player .ai-audio-volume-control,
+.vyra-featured-player .ai-audio-volume-bars,
+.vyra-featured-player .ai-audio-volume-control-btns,
+.vyra-featured-player .ai-btn-repeat,
+.vyra-featured-player .ai-btn-shuffle,
+.vyra-featured-player .ai-btn-playback-rate,
+.vyra-featured-player .ai-btn-skip-position,
+.vyra-featured-player .ai-lyrics,
+.vyra-featured-player .ai-tracklist-prev,
+.vyra-featured-player .ai-tracklist-next,
+.vyra-featured-player .ai-player-buttons,
+.vyra-featured-player .ai-track-control-buttons,
+.vyra-featured-player .ai-thumb,
+.vyra-featured-player .ai-control-wrap-thumb {
+	display: none !important;
+}
+
+/* Special Compact Styling for Music Library Table Rows */
+.vyra-music-row-player {
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none !important;
+	background: transparent !important;
+}
+
+.vyra-music-row-player .ai-audio-control {
+	width: 36px !important;
+	height: 36px !important;
+	min-width: 36px !important;
+	min-height: 36px !important;
+}
+
+/* Responsive Handling */
+@media (max-width: 768px) {
+	.vyra-single-player-area,
+	.vyra-player-box,
+	.vyra-featured-player-box {
+		padding: 1rem 1.15rem;
+		margin: 0.75rem 0;
+	}
+
+	.vyra-featured-player .ai-audio-control,
+	.vyra-featured-player .ai-btn-play,
+	.vyra-featured-player .ai-btn-pause {
+		width: 40px !important;
+		height: 40px !important;
+		min-width: 40px !important;
+		min-height: 40px !important;
+	}
+
+	.vyra-featured-player .ai-track-time {
+		font-size: 0.7rem !important;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   8. LATEST RELEASES GRID
+   -------------------------------------------------------------------------- */
+.vyra-releases-section {
+	padding: 4.5rem 0;
+}
+
+.vyra-releases-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.75rem;
+}
+
+.vyra-releases-single-card {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.vyra-releases-single-card .vyra-release-card {
+	width: 100%;
+	max-width: 380px;
+}
+
+.vyra-release-card {
+	background-color: var(--vyra-bg-card);
+	border: 1px solid var(--vyra-border);
+	border-radius: 2px;
+	overflow: hidden;
+	transition: var(--vyra-transition);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.vyra-release-card:hover {
+	transform: translateY(-6px);
+	border-color: var(--vyra-border-hover);
+}
+
+.vyra-card-media {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+}
+
+.vyra-card-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vyra-release-card:hover .vyra-card-img {
+	transform: scale(1.05);
+}
+
+.vyra-card-play-btn {
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+	width: 44px;
+	height: 44px;
+	background-color: var(--vyra-text-main);
+	color: var(--vyra-bg-dark);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transform: translateY(10px);
+	z-index: 3;
+	transition: var(--vyra-transition);
+}
+
+.vyra-release-card:hover .vyra-card-play-btn {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.vyra-release-meta {
+	padding: 1.25rem 1.5rem;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.vyra-release-year {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: var(--vyra-text-dim);
+}
+
+.vyra-release-title {
+	font-size: 1.15rem;
+	font-weight: 800;
+	margin: 0.25rem 0;
+	letter-spacing: -0.01em;
+}
+
+.vyra-release-artist {
+	font-size: 0.85rem;
+	color: var(--vyra-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. ARTIST SECTION
+   -------------------------------------------------------------------------- */
+.vyra-artist-section {
+	padding: 4.5rem 0;
+}
+
+.vyra-artist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4.5rem;
+	align-items: center;
+}
+
+.vyra-artist-media {
+	width: 100%;
+	max-width: 480px;
+	margin: 0 auto;
+}
+
+.vyra-artist-photo {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.vyra-artist-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vyra-artist-photo:hover .vyra-artist-img {
+	transform: scale(1.04);
+}
+
+.vyra-artist-vignette {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(5,5,7,0.92) 100%);
+	pointer-events: none;
+}
+
+.vyra-artist-badge-overlay {
+	position: absolute;
+	bottom: 1.75rem;
+	left: 1.75rem;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.25em;
+	padding: 0.45rem 0.9rem;
+	background: rgba(5, 5, 7, 0.85);
+	backdrop-filter: blur(8px);
+	border: 1px solid var(--vyra-border);
+	z-index: 2;
+}
+
+.vyra-artist-name {
+	font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+	font-weight: 900;
+	letter-spacing: -0.03em;
+	margin-bottom: 1.25rem;
+}
+
+.vyra-artist-bio {
+	font-size: 1.05rem;
+	color: var(--vyra-text-muted);
+	line-height: 1.75;
+	margin-bottom: 2rem;
+}
+
+.vyra-artist-stats {
+	display: flex;
+	gap: 3rem;
+	margin-bottom: 2.25rem;
+	padding-bottom: 1.75rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-stat-num {
+	display: block;
+	font-size: 2rem;
+	font-weight: 900;
+}
+
+.vyra-stat-label {
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.18em;
+	color: var(--vyra-text-dim);
+}
+
+/* --------------------------------------------------------------------------
+   10. FULL-WIDTH EDITORIAL BANNER (MANIFESTO)
+   -------------------------------------------------------------------------- */
+.vyra-fullwidth-section {
+	position: relative;
+	width: 100%;
+	padding: 6rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.vyra-fullwidth-visual-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.vyra-fullwidth-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: 1;
+	opacity: 0.35;
+}
+
+.vyra-fullwidth-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(5, 5, 7, 0.85);
+	z-index: 2;
+}
+
+.vyra-fullwidth-content {
+	position: relative;
+	z-index: 3;
+	text-align: center;
+	max-width: 900px;
+}
+
+.vyra-fullwidth-caption {
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.4em;
+	color: var(--vyra-text-dim);
+	display: block;
+	margin-bottom: 1.25rem;
+}
+
+.vyra-fullwidth-heading {
+	font-size: clamp(2.25rem, 5.5vw, 4.75rem);
+	font-weight: 900;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+	margin-bottom: 1.25rem;
+}
+
+.vyra-fullwidth-subtext {
+	font-size: 1.15rem;
+	color: var(--vyra-text-muted);
+	font-weight: 300;
+}
+
+/* --------------------------------------------------------------------------
+   11. ABOUT VYRA SECTION (EDITORIAL TWO-COLUMN)
+   -------------------------------------------------------------------------- */
+.vyra-about-section {
+	padding: 4.5rem 0;
+}
+
+.vyra-about-grid {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 4rem;
+}
+
+.vyra-lead-text {
+	font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+	font-weight: 400;
+	line-height: 1.5;
+	margin-bottom: 1.75rem;
+}
+
+.vyra-body-text {
+	font-size: 0.98rem;
+	color: var(--vyra-text-muted);
+	line-height: 1.8;
+	margin-bottom: 2.75rem;
+}
+
+.vyra-pillars {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2rem;
+}
+
+.vyra-pillar-title {
+	font-size: 0.82rem;
+	font-weight: 700;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	margin-bottom: 0.4rem;
+}
+
+.vyra-pillar-item p {
+	font-size: 0.88rem;
+	color: var(--vyra-text-muted);
+	line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   12. NEWSLETTER SECTION
+   -------------------------------------------------------------------------- */
+.vyra-newsletter-section {
+	padding: 4.5rem 0;
+}
+
+.vyra-newsletter-box {
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	padding: 4rem 2.5rem;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.vyra-newsletter-content {
+	max-width: 560px;
+	margin: 0 auto;
+}
+
+.vyra-newsletter-heading {
+	font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+	font-weight: 900;
+	letter-spacing: -0.02em;
+	margin-bottom: 0.85rem;
+}
+
+.vyra-newsletter-desc {
+	font-size: 0.92rem;
+	color: var(--vyra-text-muted);
+	margin-bottom: 2rem;
+}
+
+.vyra-input-wrapper {
+	display: flex;
+	gap: 0.75rem;
+	background-color: rgba(255, 255, 255, 0.03);
+	border: 1px solid var(--vyra-border);
+	padding: 6px;
+	border-radius: 2px;
+	transition: var(--vyra-transition);
+}
+
+.vyra-input-wrapper:focus-within {
+	border-color: var(--vyra-border-hover);
+}
+
+.vyra-input-email {
+	flex: 1;
+	padding: 0.75rem 1.25rem;
+	font-size: 0.9rem;
+	color: var(--vyra-text-main);
+	background: transparent;
+	border: none;
+	outline: none;
+}
+
+.vyra-input-email::placeholder {
+	color: var(--vyra-text-dim);
+}
+
+/* --------------------------------------------------------------------------
+   13. FOOTER
+   -------------------------------------------------------------------------- */
+.vyra-footer {
+	background-color: var(--vyra-bg-surface);
+	border-top: 1px solid var(--vyra-border);
+	padding: 4.5rem 0 3rem;
+}
+
+.vyra-footer-grid {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	gap: 3.5rem;
+	margin-bottom: 3.5rem;
+}
+
+.vyra-footer-tagline {
+	margin-top: 1rem;
+	font-size: 0.88rem;
+	color: var(--vyra-text-muted);
+	max-width: 320px;
+	line-height: 1.65;
+}
+
+.vyra-footer-title {
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.25em;
+	text-transform: uppercase;
+	color: var(--vyra-text-dim);
+	margin-bottom: 1.25rem;
+}
+
+.vyra-footer-nav-list li,
+.vyra-social-links li {
+	margin-bottom: 0.65rem;
+}
+
+.vyra-footer-nav-list a,
+.vyra-social-links a {
+	font-size: 0.88rem;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-footer-nav-list a:hover,
+.vyra-social-links a:hover {
+	color: var(--vyra-text-main);
+}
+
+.vyra-footer-bottom {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 2rem;
+	border-top: 1px solid var(--vyra-border);
+	font-size: 0.8rem;
+	color: var(--vyra-text-dim);
+}
+
+.vyra-footer-legal {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.vyra-divider {
+	color: var(--vyra-border);
+}
+
+/* --------------------------------------------------------------------------
+   14. RESPONSIVE MEDIA QUERIES
+   -------------------------------------------------------------------------- */
+
+/* Desktop Large (<= 1440px) */
+@media (max-width: 1440px) {
+	.vyra-container {
+		max-width: 1240px;
+	}
+}
+
+/* Laptop & Tablet Large (<= 1024px) */
+@media (max-width: 1024px) {
+	.vyra-releases-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.vyra-featured-layout {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	.vyra-artist-grid {
+		grid-template-columns: 1fr;
+		gap: 3rem;
+	}
+
+	.vyra-about-grid {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.vyra-footer-grid {
+		grid-template-columns: 1fr 1fr;
+		gap: 2.5rem;
+	}
+}
+
+/* Tablet Small (<= 768px) */
+@media (max-width: 768px) {
+	.vyra-nav-desktop {
+		display: none;
+	}
+
+	.vyra-mobile-toggle {
+		display: flex;
+	}
+
+	.vyra-section,
+	.vyra-featured-section,
+	.vyra-releases-section,
+	.vyra-artist-section,
+	.vyra-about-section,
+	.vyra-newsletter-section {
+		padding: 3.75rem 0;
+	}
+
+	.vyra-fullwidth-section {
+		padding: 4.5rem 0;
+	}
+
+	.vyra-releases-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.vyra-hero-ctas {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.vyra-btn {
+		width: 100%;
+	}
+
+	.vyra-newsletter-box {
+		padding: 3rem 1.5rem;
+	}
+
+	.vyra-input-wrapper {
+		flex-direction: column;
+		background: transparent;
+		border: none;
+		padding: 0;
+	}
+
+	.vyra-input-email {
+		border: 1px solid var(--vyra-border);
+		border-radius: 2px;
+		margin-bottom: 0.75rem;
+	}
+
+	.vyra-pillars {
+		grid-template-columns: 1fr;
+	}
+
+	.vyra-footer-grid {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.vyra-footer-bottom {
+		flex-direction: column;
+		gap: 1.25rem;
+		text-align: center;
+	}
+}
+
+/* Mobile Small (<= 390px) */
+@media (max-width: 390px) {
+	.vyra-container {
+		padding: 0 1.25rem;
+	}
+
+	.vyra-hero-brand-title {
+		font-size: clamp(3.2rem, 15vw, 4.5rem);
+	}
+
+	.vyra-hero-subtitle {
+		font-size: 0.75rem;
+		letter-spacing: 0.25em;
+	}
+
+	.vyra-artist-stats {
+		gap: 1.5rem;
+	}
+
+	.vyra-stat-num {
+		font-size: 1.65rem;
+	}
+}
+   11. RELEASES ARCHIVE & SINGLE RELEASE TEMPLATES
+   -------------------------------------------------------------------------- */
+
+/* Card Link Wrapper & Hover State */
+.vyra-card-link-wrapper {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+	height: 100%;
+}
+
+.vyra-release-card {
+	position: relative;
+	transition: var(--vyra-transition);
+}
+
+.vyra-release-card:hover .vyra-card-img {
+	transform: scale(1.05);
+}
+
+.vyra-card-hover-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(5, 5, 7, 0.5);
+	backdrop-filter: blur(2px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: var(--vyra-transition-fast);
+	z-index: 3;
+}
+
+.vyra-release-card:hover .vyra-card-hover-overlay {
+	opacity: 1;
+}
+
+.vyra-view-btn {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	color: var(--vyra-text-main);
+	padding: 0.6rem 1.2rem;
+	background: rgba(255, 255, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 2px;
+	transform: translateY(10px);
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-release-card:hover .vyra-view-btn {
+	transform: translateY(0);
+}
+
+.vyra-release-top-line {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 0.25rem;
+}
+
+.vyra-release-type-badge {
+	font-size: 0.7rem;
+	letter-spacing: 0.12em;
+	color: var(--vyra-text-muted);
+	font-weight: 600;
+}
+
+/* Archive Page Styling */
+.vyra-archive-hero {
+	padding-top: calc(var(--vyra-header-height) + 3rem);
+	padding-bottom: 2rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-archive-header-content {
+	max-width: 680px;
+}
+
+.vyra-archive-description {
+	margin-top: 1rem;
+	color: var(--vyra-text-muted);
+	font-size: 1.1rem;
+	line-height: 1.6;
+}
+
+.vyra-archive-grid-section {
+	padding-top: 3.5rem;
+	padding-bottom: 5rem;
+}
+
+.vyra-pagination-wrapper {
+	margin-top: 4rem;
+	display: flex;
+	justify-content: center;
+}
+
+.vyra-pagination-wrapper .nav-links {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+.vyra-pagination-wrapper a,
+.vyra-pagination-wrapper span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--vyra-border);
+	font-size: 0.85rem;
+	letter-spacing: 0.05em;
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-pagination-wrapper a:hover,
+.vyra-pagination-wrapper span.current {
+	background: #ffffff;
+	color: #050507;
+	border-color: #ffffff;
+}
+
+.vyra-empty-state {
+	text-align: center;
+	padding: 5rem 2rem;
+	border: 1px dashed var(--vyra-border);
+	border-radius: 4px;
+}
+
+.vyra-empty-title {
+	font-size: 1.25rem;
+	letter-spacing: 0.15em;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+.vyra-empty-sub {
+	color: var(--vyra-text-muted);
+}
+
+/* Single Release Page Styling */
+.vyra-single-release-section {
+	padding-top: calc(var(--vyra-header-height) + 2rem);
+	padding-bottom: 6rem;
+}
+
+.vyra-back-wrapper {
+	margin-bottom: 2.5rem;
+}
+
+.vyra-back-link {
+	display: inline-flex;
+	align-items: center;
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	color: var(--vyra-text-muted);
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-back-link:hover {
+	color: var(--vyra-text-main);
+	transform: translateX(-4px);
+}
+
+.vyra-single-release-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4rem;
+	align-items: start;
+}
+
+.vyra-single-artwork-frame {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	overflow: hidden;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.vyra-single-artwork-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.vyra-catalog-badge {
+	position: absolute;
+	bottom: 1.25rem;
+	right: 1.25rem;
+	background: rgba(5, 5, 7, 0.85);
+	backdrop-filter: blur(4px);
+	border: 1px solid var(--vyra-border);
+	padding: 0.35rem 0.75rem;
+	font-size: 0.7rem;
+	letter-spacing: 0.15em;
+	font-family: var(--vyra-font-mono);
+	color: var(--vyra-text-muted);
+	z-index: 2;
+}
+
+.vyra-single-header-meta {
+	margin-bottom: 2rem;
+}
+
+.vyra-release-type-year {
+	display: inline-block;
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 0.5rem;
+}
+
+.vyra-single-title {
+	font-size: clamp(2.2rem, 4vw, 3.2rem);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	line-height: 1.1;
+	color: var(--vyra-text-main);
+	margin-bottom: 0.5rem;
+}
+
+.vyra-single-artist {
+	font-size: 1.25rem;
+	color: var(--vyra-text-muted);
+	font-weight: 400;
+	letter-spacing: 0.02em;
+}
+
+.vyra-single-description {
+	font-size: 1.05rem;
+	line-height: 1.7;
+	color: #c4c4cc;
+	margin-bottom: 2.5rem;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-single-player-area {
+	margin-bottom: 2.5rem;
+	background: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 1.25rem;
+}
+
+.vyra-player-label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 1rem;
+}
+
+.vyra-live-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: #22c55e;
+	box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.vyra-single-meta-box {
+	background: rgba(255, 255, 255, 0.02);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 1.5rem;
+}
+
+.vyra-meta-box-heading {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 1.25rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-meta-dl {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: 1.25rem;
+}
+
+.vyra-meta-item dt {
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 0.25rem;
+}
+
+.vyra-meta-item dd {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: var(--vyra-text-main);
+	font-family: var(--vyra-font-sans);
+}
+
+.vyra-single-full-content {
+	margin-top: 4rem;
+	padding-top: 3rem;
+	border-top: 1px solid var(--vyra-border);
+}
+
+.vyra-subtle-heading {
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments for Single & Archive */
+@media (max-width: 992px) {
+	.vyra-single-release-grid {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	.vyra-single-artwork-col {
+		max-width: 500px;
+		margin: 0 auto;
+	}
+}
+
+@media (max-width: 600px) {
+	.vyra-single-title {
+		font-size: 2rem;
+	}
+
+	.vyra-single-meta-dl {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   12. ARTIST ARCHIVE & SINGLE ARTIST TEMPLATES
+   -------------------------------------------------------------------------- */
+
+/* Artist Grid Layout */
+.vyra-artists-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 2.5rem;
+}
+
+.vyra-artist-card-media {
+	aspect-ratio: 4 / 5;
+	border-radius: 4px;
+	overflow: hidden;
+	position: relative;
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+}
+
+.vyra-artist-card-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: var(--vyra-transition);
+}
+
+.vyra-artist-card:hover .vyra-artist-card-img {
+	transform: scale(1.06);
+}
+
+.vyra-artist-meta {
+	padding-top: 1rem;
+}
+
+.vyra-artist-genre-badge {
+	display: inline-block;
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 0.25rem;
+}
+
+.vyra-artist-card-title {
+	font-size: 1.35rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--vyra-text-main);
+	line-height: 1.2;
+}
+
+.vyra-artist-card-location {
+	font-size: 0.85rem;
+	color: var(--vyra-text-dim);
+	margin-top: 0.2rem;
+}
+
+/* Single Artist View */
+.vyra-single-artist-section {
+	padding-top: calc(var(--vyra-header-height) + 2rem);
+	padding-bottom: 6rem;
+}
+
+.vyra-single-artist-grid {
+	display: grid;
+	grid-template-columns: 1fr 1.2fr;
+	gap: 4rem;
+	align-items: start;
+	margin-bottom: 5rem;
+}
+
+.vyra-artist-portrait-frame {
+	aspect-ratio: 4 / 5;
+	border-radius: 4px;
+}
+
+.vyra-artist-portrait-img {
+	object-fit: cover;
+}
+
+.vyra-single-artist-location {
+	font-size: 1.1rem;
+	color: var(--vyra-text-muted);
+	margin-top: 0.25rem;
+}
+
+.vyra-artist-socials-box {
+	margin-top: 2.5rem;
+	padding-top: 2rem;
+	border-top: 1px solid var(--vyra-border);
+}
+
+.vyra-artist-social-links {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.vyra-btn-sm {
+	padding: 0.5rem 1.25rem;
+	font-size: 0.75rem;
+}
+
+.vyra-artist-releases-section {
+	padding-top: 4rem;
+	border-top: 1px solid var(--vyra-border);
+}
+
+/* Artist Link Styling in Releases */
+.vyra-artist-link {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-artist-link:hover {
+	color: var(--vyra-text-main);
+	border-bottom-color: var(--vyra-text-main);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+	.vyra-single-artist-grid {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	.vyra-artists-grid {
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 2rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.vyra-artist-social-links {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.vyra-artist-social-links .vyra-btn {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   13. MUSIC LIBRARY PAGE TEMPLATE
+   -------------------------------------------------------------------------- */
+
+.vyra-music-library-section {
+	padding-top: 3.5rem;
+	padding-bottom: 6rem;
+}
+
+.vyra-music-table-wrapper {
+	width: 100%;
+	background: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.vyra-music-table-header {
+	display: grid;
+	grid-template-columns: 50px 2.2fr 1.5fr 1.5fr 280px;
+	gap: 1.25rem;
+	align-items: center;
+	padding: 1rem 1.5rem;
+	background: rgba(255, 255, 255, 0.02);
+	border-bottom: 1px solid var(--vyra-border);
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-music-row {
+	display: grid;
+	grid-template-columns: 50px 2.2fr 1.5fr 1.5fr 280px;
+	gap: 1.25rem;
+	align-items: center;
+	padding: 1.15rem 1.5rem;
+	border-bottom: 1px solid var(--vyra-border);
+	transition: var(--vyra-transition-fast);
+	position: relative;
+}
+
+.vyra-music-row:last-child {
+	border-bottom: none;
+}
+
+.vyra-music-row:hover {
+	background-color: rgba(255, 255, 255, 0.025);
+}
+
+.vyra-row-number {
+	font-family: var(--vyra-font-mono);
+	font-size: 0.85rem;
+	color: var(--vyra-text-muted);
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-music-row:hover .vyra-row-number {
+	color: var(--vyra-text-main);
+}
+
+.vyra-track-title-block {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.vyra-row-thumb {
+	width: 44px;
+	height: 44px;
+	object-fit: cover;
+	border-radius: 2px;
+	border: 1px solid var(--vyra-border);
+	flex-shrink: 0;
+}
+
+.vyra-row-track-name {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--vyra-text-main);
+	line-height: 1.2;
+}
+
+.vyra-row-track-name a {
+	color: inherit;
+	text-decoration: none;
+	transition: var(--vyra-transition-fast);
+	display: inline-block;
+}
+
+.vyra-music-row:hover .vyra-row-track-name a {
+	transform: translateX(3px);
+	color: #ffffff;
+}
+
+.vyra-row-catalog {
+	display: block;
+	font-size: 0.7rem;
+	font-family: var(--vyra-font-mono);
+	color: var(--vyra-text-dim);
+	margin-top: 0.15rem;
+	letter-spacing: 0.05em;
+}
+
+.vyra-artist-text {
+	font-size: 0.95rem;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-release-text {
+	font-size: 0.95rem;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-release-text a {
+	color: inherit;
+}
+
+.vyra-release-text a:hover {
+	color: var(--vyra-text-main);
+}
+
+.vyra-release-meta-tag {
+	font-size: 0.75rem;
+	color: var(--vyra-text-dim);
+}
+
+.vyra-col-audio {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.vyra-music-row-player {
+	width: 100%;
+	max-width: 280px;
+}
+
+.vyra-no-audio-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.35rem 0.75rem;
+	border: 1px solid var(--vyra-border);
+	border-radius: 2px;
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	color: var(--vyra-text-dim);
+	background: rgba(255, 255, 255, 0.01);
+}
+
+.vyra-mobile-label {
+	display: none;
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	color: var(--vyra-text-dim);
+	margin-bottom: 0.2rem;
+}
+
+/* Mobile Stacked Layout */
+@media (max-width: 992px) {
+	.vyra-music-table-header {
+		display: none;
+	}
+
+	.vyra-music-row {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		align-items: flex-start;
+		padding: 1.5rem 1.25rem;
+	}
+
+	.vyra-col-num {
+		position: absolute;
+		top: 1.5rem;
+		right: 1.25rem;
+	}
+
+	.vyra-col-title,
+	.vyra-col-artist,
+	.vyra-col-release,
+	.vyra-col-audio {
+		width: 100%;
+	}
+
+	.vyra-col-audio {
+		justify-content: flex-start;
+		margin-top: 0.25rem;
+	}
+
+	.vyra-music-row-player {
+		max-width: 100%;
+	}
+
+	.vyra-mobile-label {
+		display: block;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   14. VYRA PERSISTENT GLOBAL MUSIC PLAYER STYLES
+   -------------------------------------------------------------------------- */
+
+body.vyra-global-player-active {
+	padding-bottom: 78px !important;
+	transition: padding-bottom 0.4s ease;
+}
+
+.vyra-global-player {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 78px;
+	z-index: 9999;
+	background-color: rgba(10, 10, 14, 0.95);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-top: 1px solid var(--vyra-border);
+	transform: translateY(100%);
+	opacity: 0;
+	visibility: hidden;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+	box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.vyra-global-player.vyra-active {
+	transform: translateY(0);
+	opacity: 1;
+	visibility: visible;
+}
+
+.vyra-global-player-inner {
+	max-width: var(--vyra-max-width);
+	margin: 0 auto;
+	padding: 0 2rem;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	position: relative;
+}
+
+/* Left Track Info */
+.vyra-global-track-info {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	width: 240px; min-width: 170px;
+	flex-shrink: 0;
+}
+
+.vyra-global-cover {
+	width: 48px;
+	height: 48px;
+	object-fit: cover;
+	border-radius: 3px;
+	border: 1px solid var(--vyra-border);
+	flex-shrink: 0;
+}
+
+.vyra-global-meta {
+	min-width: 0;
+	flex: 1;
+}
+
+.vyra-global-title {
+	font-size: 0.9rem;
+	font-weight: 700;
+	color: #ffffff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0 0 0.15rem 0;
+	letter-spacing: -0.01em;
+}
+
+.vyra-global-artist {
+	font-size: 0.78rem;
+	color: var(--vyra-text-muted);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+}
+
+/* Center Progress & Timers */
+.vyra-global-progress-container {
+	flex: 1;
+	max-width: 580px;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	justify-content: center;
+}
+
+.vyra-global-progress-bar {
+	width: 100%;
+	height: 4px;
+	background-color: rgba(255, 255, 255, 0.12);
+	border-radius: 2px;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+}
+
+.vyra-global-progress-bar:focus-visible {
+	outline: 1px solid #ffffff;
+}
+
+.vyra-global-progress-fill {
+	height: 100%;
+	background-color: #ffffff;
+	border-radius: 2px;
+	position: relative;
+	width: 0%;
+	transition: width 0.1s linear;
+}
+
+.vyra-global-progress-fill::after {
+	content: "";
+	position: absolute;
+	right: -4px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.vyra-global-timers {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.72rem;
+	font-family: var(--vyra-font-mono);
+	color: var(--vyra-text-muted);
+	line-height: 1;
+}
+
+/* Right Controls */
+.vyra-global-controls {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem; flex-shrink: 0; } .vyra-global-play-btn {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	background-color: #ffffff;
+	color: #050507;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	outline: none;
+	padding: 0;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.vyra-global-play-btn:hover,
+.vyra-global-play-btn:focus-visible {
+	transform: scale(1.08);
+	background-color: #e5e5e5;
+}
+
+.vyra-global-close-btn {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: transparent;
+	color: var(--vyra-text-muted);
+	border: 1px solid var(--vyra-border);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s ease;
+	outline: none;
+	padding: 0;
+}
+
+.vyra-global-close-btn:hover,
+.vyra-global-close-btn:focus-visible {
+	color: #ffffff;
+	border-color: rgba(255, 255, 255, 0.3);
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+	.vyra-global-player {
+		transition: none !important;
+	}
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+	body.vyra-global-player-active {
+		padding-bottom: 68px !important;
+	}
+
+	.vyra-global-player {
+		height: 68px;
+	}
+
+	.vyra-global-player-inner {
+		padding: 0 1rem;
+		gap: 1rem;
+	}
+
+	.vyra-global-track-info {
+		width: auto;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.vyra-global-cover {
+		width: 40px;
+		height: 40px;
+	}
+
+	.vyra-global-progress-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		max-width: 100%;
+		padding: 0;
+	}
+
+	.vyra-global-progress-bar {
+		height: 3px;
+		border-radius: 0;
+	}
+
+	.vyra-global-progress-fill {
+		border-radius: 0;
+	}
+
+	.vyra-global-timers {
+		display: none;
+	}
+
+	.vyra-global-play-btn {
+		width: 36px;
+		height: 36px;
+	}
+
+	.vyra-global-close-btn {
+		width: 28px;
+		height: 28px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   15. VYRA ABOUT PAGE TEMPLATE
+   -------------------------------------------------------------------------- */
+
+.vyra-about-hero-section {
+	padding-top: calc(var(--vyra-header-height) + 4rem);
+	padding-bottom: 4rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-about-main-title {
+	font-size: clamp(3.5rem, 9vw, 7.5rem);
+	font-weight: 900;
+	line-height: 0.95;
+	letter-spacing: -0.04em;
+	text-transform: uppercase;
+	margin-bottom: 2.25rem;
+	color: var(--vyra-text-main);
+}
+
+.vyra-about-lead-text {
+	font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+	font-weight: 400;
+	color: #c4c4cc;
+	max-width: 680px;
+	line-height: 1.5;
+	letter-spacing: -0.01em;
+}
+
+/* Approach / Manifesto */
+.vyra-approach-section {
+	padding: 6rem 0;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-approach-header {
+	max-width: 720px;
+}
+
+.vyra-approach-body {
+	margin-top: 1.25rem;
+	font-size: 1.1rem;
+	line-height: 1.7;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-principles-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
+	margin-top: 4rem;
+}
+
+.vyra-principle-card {
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 2.25rem 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-principle-card:hover {
+	border-color: var(--vyra-border-hover);
+	transform: translateY(-4px);
+}
+
+.vyra-principle-num {
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-muted);
+	font-family: var(--vyra-font-mono);
+}
+
+.vyra-principle-title {
+	font-size: 1.15rem;
+	font-weight: 600;
+	color: var(--vyra-text-main);
+	line-height: 1.45;
+}
+
+/* Visual Split Section */
+.vyra-visual-split-section {
+	padding: 6rem 0;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-split-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4.5rem;
+	align-items: center;
+}
+
+.vyra-split-artwork-frame {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	border-radius: 4px;
+	overflow: hidden;
+	border: 1px solid var(--vyra-border);
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.vyra-split-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.vyra-split-content .vyra-body-text {
+	margin-top: 1.25rem;
+	font-size: 1.05rem;
+	line-height: 1.7;
+	color: var(--vyra-text-muted);
+}
+
+/* Spectrum Section */
+.vyra-what-we-do-section {
+	padding: 6rem 0;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-spectrum-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.75rem;
+	margin-top: 3.5rem;
+}
+
+.vyra-spectrum-card {
+	background: rgba(255, 255, 255, 0.02);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 2.25rem 1.75rem;
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-spectrum-card:hover {
+	border-color: var(--vyra-border-hover);
+	background: rgba(255, 255, 255, 0.035);
+}
+
+.vyra-spectrum-title {
+	font-size: 0.85rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-main);
+	margin-bottom: 0.75rem;
+}
+
+.vyra-spectrum-desc {
+	font-size: 0.95rem;
+	color: var(--vyra-text-muted);
+	line-height: 1.5;
+}
+
+/* About CTA Section */
+.vyra-about-cta-section {
+	padding: 6rem 0;
+}
+
+.vyra-about-cta-box {
+	text-align: center;
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 4.5rem 2rem;
+}
+
+.vyra-cta-heading {
+	font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+	font-weight: 900;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	color: var(--vyra-text-main);
+	margin-bottom: 1.5rem;
+}
+
+.vyra-about-cta-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+}
+
+/* Responsive Media Queries for About Page */
+@media (max-width: 992px) {
+	.vyra-principles-grid {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.vyra-split-grid {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	.vyra-spectrum-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.vyra-spectrum-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.vyra-about-cta-buttons {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.vyra-about-cta-buttons .vyra-btn {
+		width: 100%;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   16. VYRA CONTACT PAGE TEMPLATE & FORM STYLES
+   -------------------------------------------------------------------------- */
+
+.vyra-contact-hero-section {
+	padding-top: calc(var(--vyra-header-height) + 4rem);
+	padding-bottom: 4rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-contact-main-title {
+	font-size: clamp(3.5rem, 9vw, 7.5rem);
+	font-weight: 900;
+	line-height: 0.95;
+	letter-spacing: -0.04em;
+	text-transform: uppercase;
+	margin-bottom: 2.25rem;
+	color: var(--vyra-text-main);
+}
+
+.vyra-contact-lead-text {
+	font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+	font-weight: 400;
+	color: #c4c4cc;
+	max-width: 680px;
+	line-height: 1.5;
+	letter-spacing: -0.01em;
+}
+
+/* Contact Main Section */
+.vyra-contact-main-section {
+	padding: 6rem 0;
+}
+
+.vyra-contact-grid {
+	display: grid;
+	grid-template-columns: 1fr 1.2fr;
+	gap: 4.5rem;
+	align-items: start;
+}
+
+.vyra-contact-dept-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
+
+.vyra-dept-item {
+	padding-bottom: 2rem;
+	border-bottom: 1px solid var(--vyra-border);
+}
+
+.vyra-dept-item:last-child {
+	border-bottom: none;
+}
+
+.vyra-dept-label {
+	display: block;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.25em;
+	color: var(--vyra-text-dim);
+	margin-bottom: 0.5rem;
+}
+
+.vyra-dept-email {
+	display: inline-block;
+	font-size: 1.35rem;
+	font-weight: 600;
+	color: var(--vyra-text-main);
+	text-decoration: none;
+	margin-bottom: 0.5rem;
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-dept-email:hover,
+.vyra-dept-email:focus-visible {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.vyra-dept-desc {
+	font-size: 0.95rem;
+	color: var(--vyra-text-muted);
+	line-height: 1.55;
+}
+
+/* Contact Form Container */
+.vyra-contact-form-box {
+	background-color: var(--vyra-bg-surface);
+	border: 1px solid var(--vyra-border);
+	border-radius: 4px;
+	padding: 3rem 2.5rem;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.vyra-form-group {
+	margin-bottom: 1.75rem;
+}
+
+.vyra-form-label {
+	display: block;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	color: var(--vyra-text-muted);
+	margin-bottom: 0.6rem;
+}
+
+.vyra-form-input,
+.vyra-form-textarea {
+	width: 100%;
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid var(--vyra-border);
+	border-radius: 2px;
+	padding: 0.85rem 1rem;
+	color: var(--vyra-text-main);
+	font-family: var(--vyra-font-sans);
+	font-size: 0.95rem;
+	transition: var(--vyra-transition-fast);
+	outline: none;
+	box-sizing: border-box;
+}
+
+.vyra-form-input::placeholder,
+.vyra-form-textarea::placeholder {
+	color: var(--vyra-text-dim);
+}
+
+.vyra-form-input:focus,
+.vyra-form-textarea:focus {
+	border-color: rgba(255, 255, 255, 0.4);
+	background: rgba(255, 255, 255, 0.06);
+	box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+.vyra-form-textarea {
+	resize: vertical;
+	min-height: 120px;
+}
+
+.vyra-form-actions {
+	margin-top: 2rem;
+}
+
+.vyra-form-status-notice {
+	margin-top: 1.5rem;
+	padding: 0.85rem 1.25rem;
+	border: 1px solid var(--vyra-border);
+	background: rgba(255, 255, 255, 0.04);
+	border-radius: 2px;
+	font-size: 0.85rem;
+	letter-spacing: 0.05em;
+	color: var(--vyra-text-muted);
+	text-align: center;
+}
+
+/* Follow Section */
+.vyra-follow-section {
+	padding: 5rem 0;
+	text-align: center;
+	border-top: 1px solid var(--vyra-border);
+}
+
+.vyra-follow-heading {
+	font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+	font-weight: 900;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	color: var(--vyra-text-main);
+	margin-top: 0.5rem;
+	margin-bottom: 2rem;
+}
+
+.vyra-follow-socials {
+	display: flex;
+	gap: 2.5rem;
+	justify-content: center;
+	flex-wrap: wrap;
+	list-style: none;
+	font-size: 0.95rem;
+	color: var(--vyra-text-muted);
+}
+
+.vyra-follow-socials a {
+	color: var(--vyra-text-muted);
+	text-decoration: none;
+	transition: var(--vyra-transition-fast);
+}
+
+.vyra-follow-socials a:hover,
+.vyra-follow-socials a:focus-visible {
+	color: var(--vyra-text-main);
+}
+
+/* Responsive Media Queries for Contact Page */
+@media (max-width: 992px) {
+	.vyra-contact-grid {
+		grid-template-columns: 1fr;
+		gap: 3.5rem;
+	}
+
+	.vyra-contact-form-box {
+		padding: 2.25rem 1.75rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.vyra-dept-email {
+		font-size: 1.15rem;
+	}
+
+	.vyra-follow-socials {
+		gap: 1.5rem;
+	}
+}
+
