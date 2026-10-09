@@ -27,4 +27,3 @@ jobs:
           protocol: ftps
           local-dir: wp-content/themes/vyra-theme/
           server-dir: /htdocs/wp-content/themes/vyra-theme/
-          dry-run: true
