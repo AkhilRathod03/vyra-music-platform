@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Sync Theme to Live Server
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
@@ -27,3 +27,4 @@ jobs:
           protocol: ftps
           local-dir: wp-content/themes/vyra-theme/
           server-dir: /htdocs/wp-content/themes/vyra-theme/
+          dry-run: true
